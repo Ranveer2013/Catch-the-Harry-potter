@@ -1,6 +1,7 @@
-import pgzrun,random
+import pgzrun,random,pyautogui
+print(pyautogui.size())
 
-WIDTH,HEIGHT = 800,500
+WIDTH,HEIGHT = pyautogui.size()
 harry=Actor("harry_potter.png")
 harry.pos=400,200
 #dumbledore=Actor("dumbledore.png")
@@ -40,21 +41,40 @@ def random_position():
     x=random.randint(50,750)
     y=random.randint(50,450)
    # voldemart.pos=x,y
+#Harry
 def update():
-    if keyboard.up:
-        harry.y-=20
+    global score,message
+    if game_over:
 
-    elif keyboard.down:
-        harry.y+=20
-def on_key_down(key):
-    if keys.LEFT==key:
-        harry.x-=20
 
-    elif keys.RIGHT==key:
-        harry.x+=20
+        if keyboard.up and harry.y > 75: 
+            harry.y-=20
 
-    
+        elif keyboard.down and harry.y < HEIGHT - 75:
+            harry.y+=20
 
+        if keyboard.w and ron.y > 75:
+            ron.y-=20
+
+        if keyboard.s and ron.y < HEIGHT - 75:
+            ron.y+=20
+
+        if keyboard.a and ron.x > 75:
+            ron.x-=20
+
+        if keyboard.d and ron.x < WIDTH - 75:
+            ron.x+=20
+
+        if keyboard.left and harry.x > 75:
+            harry.x-=20
+
+        if keyboard.right and harry.x < WIDTH - 75:
+            harry.x+=20
+
+        if harry.colliderect(ron):
+            random_position()
+            score+=10
+            message="Good Job!"
 
 
        
