@@ -8,12 +8,15 @@ harry.pos=400,200
 #dumbledore.pos=400,400
 ron=Actor("ron-harry_potter.png")
 ron.pos=200,200
-#voldemart=Actor("voldemart.png")
-#voldemart.pos=200,400
+voldemart=Actor("voldemart.png")
+voldemart.pos=200,400
 
 game_over=False
 message="catch the harry potter,ron and avoid the dumbledore and voldemart!"
 score=0
+h_score=0
+r_score=0
+
 
 def draw():
     screen.blit("bg.jpg",(0,0))
@@ -21,12 +24,12 @@ def draw():
         harry.draw()
         #dumbledore.draw()
         ron.draw()
-       # voldemart.draw()
+        voldemart.draw()
     else:
-        pass
+        screen.blit("game_over",(WIDTH//3,HEIGHT//3))
     screen.draw.text(message,(20,20))
-    screen.draw.text("score"+ str(score),(20,40))
-
+    screen.draw.text("hary_score"+ str(h_score),(20,40))
+    screen.draw.text("ron_score" + str(r_score),(WIDTH-120,40))
 def random_position():
     x=random.randint(50,750)
     y=random.randint(50,450)
@@ -40,11 +43,11 @@ def random_position():
     ron.pos=x,y
     x=random.randint(50,750)
     y=random.randint(50,450)
-   # voldemart.pos=x,y
+    voldemart.pos=x,y
 #Harry
 def update():
-    global score,message
-    if game_over:
+    global h_score,r_score,message
+    if not game_over:
 
 
         if keyboard.up and harry.y > 75: 
@@ -71,10 +74,24 @@ def update():
         if keyboard.right and harry.x < WIDTH - 75:
             harry.x+=20
 
-        if harry.colliderect(ron):
+        if harry.colliderect(voldemart):
             random_position()
-            score+=10
-            message="Good Job!"
+            h_score+=10
+            message="Good Job Harry!"
+        if ron.colliderect(voldemart):
+            random_position()
+            r_score+=10
+            message="Good Job Ron!"
+
+        
+        
+        
+        if harry.colliderect(ron):
+            h_score-=10
+            r_score-=10
+            random_position()
+            message="Focus on voldemart:"
+
 
 
        
